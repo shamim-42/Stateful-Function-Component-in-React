@@ -1,26 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState } from 'react';
+import Axios from 'axios';
 
-function App() {
+
+export default function Shop() {
+  const [products, setProducts] = useState(['Rice', 'Oil']);
+
+  let all_company_url = "some url here";
+
+  function fetch_all_products() {
+
+    Axios.get(all_company_url)
+      .then(response => {
+        //suppose below data we received from the server by API calling
+        let data = ['book', 'exercise book', 'monitor', 'computer', 'pen']
+        setProducts(data);
+      });
+  }
+
+  let all_products = products.map(product => {
+    return (
+      <li>{product}</li>
+    )
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <h2>The Grocery Shop </h2>
+      <button onClick={fetch_all_products}>See All Products </button>
+      <ul>
+        {all_products}
+      </ul>
+    </>
+  )
 }
-
-export default App;
